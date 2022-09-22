@@ -1,24 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
+import {useAppDispatch, useAppSelector} from "./store/hooks";
+import {incremented, decremented, reset, amountAdded} from "./features/counter/counterSlice";
+// import {useFetchBreedsQuery} from "./features/dogs/dogsApiSlice";
+import {useFetchPhotosQuery} from "./features/photos/photosApiSlice";
 import './App.css';
 
 function App() {
+
+  const value = useAppSelector((state)=> state.counter.value)
+  // const {data=[], isFetching} = useFetchBreedsQuery()
+  const {data=[], isFetching} = useFetchPhotosQuery()
+  const dispatch = useAppDispatch()
+
+  console.log(data)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>{value}</p>
+      <button onClick={()=> dispatch(incremented())}>+</button>
+      <button onClick={()=> dispatch(amountAdded(5))}>+5</button>
+      <button onClick={()=> dispatch(reset())}>Reset</button>
+      <button onClick={()=> dispatch(decremented())}>-</button>
+
+      {/*<div>*/}
+      {/*    <p>Number of dogs fetched: {data.length}</p>*/}
+      {/*    <table>*/}
+      {/*        <thead>*/}
+      {/*          <tr>*/}
+      {/*              <th>Name</th>*/}
+      {/*              <th>Pic</th>*/}
+      {/*          </tr>*/}
+      {/*        </thead>*/}
+      {/*        <tbody>*/}
+      {/*          {data.map(breed => (*/}
+      {/*              <tr key={breed.id}>*/}
+      {/*                  <td>{breed.name}</td>*/}
+      {/*                  <td>*/}
+      {/*                      <img src={breed.image.url} alt={breed.name} height={100}/>*/}
+      {/*                  </td>*/}
+      {/*              </tr>*/}
+      {/*          ))}*/}
+      {/*        </tbody>*/}
+      {/*    </table>*/}
+      {/*</div>*/}
     </div>
   );
 }

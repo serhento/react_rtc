@@ -1,0 +1,21 @@
+import {configureStore} from "@reduxjs/toolkit";
+import counterReducer from "../features/counter/counterSlice";
+import {apiSlice} from "../features/dogs/dogsApiSlice"
+import {photosApiSlice} from "../features/photos/photosApiSlice";
+
+export const store = configureStore({
+    reducer: {
+        counter: counterReducer,
+        [apiSlice.reducerPath]: apiSlice.reducer,
+        [photosApiSlice.reducerPath]: photosApiSlice.reducer
+    },
+    // middleware: (getDefaultMiddleware) => {
+    //     return getDefaultMiddleware().concat(apiSlice.middleware)
+    // },
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware().concat(photosApiSlice.middleware)
+    }
+})
+
+export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>
